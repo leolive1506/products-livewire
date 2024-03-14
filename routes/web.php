@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\Product as AdminProduct;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Customer\Product;
 use App\Livewire\Customer\Product\Cart;
@@ -19,4 +20,11 @@ Route::prefix('products')->middleware('auth')->group(function () {
 });
 
 Route::get('cart', Cart\Index::class)->middleware('auth')->name('cart');
+
+ROute::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::prefix('products')->group(function () {
+        Route::get('/', AdminProduct\Index::class)->name('admin.product.index');
+    });
+
+});
 require __DIR__.'/auth.php';

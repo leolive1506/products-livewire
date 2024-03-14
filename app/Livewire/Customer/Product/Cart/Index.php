@@ -16,8 +16,19 @@ class Index extends Component
 
     #[Computed()]
     public function cart(): Collection
-    {
+    {        
         return Cart::with('product')->user(auth()->id())->get();
+    }
+
+    #[Computed()]
+    public function total(): float
+    {
+        $total = 0;
+        $this->cart->each(function (Cart $cart) use (&$total) {
+            $total += $cart->product->price * $cart->quantity;
+        });
+
+        return $total;
     }
 
     public function add(Cart $cart): Cart
@@ -25,6 +36,9 @@ class Index extends Component
         $cart->update([
             'quantity' => $cart->quantity + 1
         ]);
+
+        $this->cart();
+        $this->dispatch('notify', content: 'Add with Success', type: 'success');
 
         return $cart;
     }
@@ -37,11 +51,15 @@ class Index extends Component
             ]);
         }
 
+        $this->cart();
+        $this->dispatch('notify', content: 'Decrease with Success', type: 'success');
         return $cart;
     }
 
     public function remove(Cart $cart): void
     {
         $cart->delete();
+        $this->cart();
+        $this->dispatch('notify', content: 'Removed with Success', type: 'success');
     }
 }

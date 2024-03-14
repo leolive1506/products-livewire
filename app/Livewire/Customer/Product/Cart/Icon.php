@@ -4,6 +4,7 @@ namespace App\Livewire\Customer\Product\Cart;
 
 use App\Models\Cart;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Icon extends Component
@@ -13,6 +14,7 @@ class Icon extends Component
         return view('livewire.customer.product.cart.icon');
     }
 
+    #[On('add-product-to-cart')]
     #[Computed()]
     public function productsAmount()
     {

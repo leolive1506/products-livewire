@@ -4,9 +4,9 @@
             <div
                 class="group aspect-h-4 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
                 <img src="{{ $product->image }}" alt="{{ $product->image }} photo" class="pointer-events-none object-cover group-hover:opacity-75">
-                <button type="button" class="absolute inset-0 focus:outline-none">
+                {{-- <button type="button" class="absolute inset-0 focus:outline-none">
                     <span class="sr-only">View details for {{ $product->image }}</span>
-                </button>
+                </button> --}}
             </div>
             <div class="flex items-center justify-between">
                 <div>
@@ -16,7 +16,7 @@
                     <p class="pointer-events-none block text-sm font-medium text-gray-500">{{ $product->name }}</p>
                 </div>
                 <div>
-                    <x-primary-button>BUY</x-primary-button>    
+                    <x-primary-button wire:click="buy({{ $product }})">BUY</x-primary-button>    
                 </div>
             </div>
         </li>

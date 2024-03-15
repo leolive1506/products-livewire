@@ -2,17 +2,15 @@
 
 namespace App\Livewire\Admin\Product;
 
-use App\Livewire\Forms\Admin\Product\Form;
-use App\Models\Product;
+use App\Livewire\Forms\Admin\Product\CreateForm;
 use Livewire\Component;
 use \Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
     use WithFileUploads;
-    public Form $form;
+    public CreateForm $form;
 
     public function render(): View
     {

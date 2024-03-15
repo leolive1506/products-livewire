@@ -23,6 +23,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/', AdminProduct\Index::class)->name('admin.product.index');
         Route::get('/create', AdminProduct\Create::class)->name('admin.product.create');
+        Route::get('/edit/{product}', AdminProduct\Edit::class)->name('admin.product.edit');
     });
 
 });

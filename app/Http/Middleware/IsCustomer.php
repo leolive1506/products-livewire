@@ -15,8 +15,9 @@ class IsCustomer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->role()->role === 'CUSTOMER') {
-            abort(Response::HTTP_FORBIDDEN);
+        $userRole = auth()->user()->load('role')->role;
+        if (!($userRole->role === 'CUSTOMER')) {
+            return redirect()->route('admin.product.index');
         }
         
         return $next($request);

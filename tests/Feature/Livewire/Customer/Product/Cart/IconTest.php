@@ -1,7 +1,6 @@
 <?php
 
 use App\Livewire\Customer\Product\Cart\Icon;
-use App\Livewire\Customer\Product\Index;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
@@ -11,7 +10,6 @@ it('update quantity cart', function () {
     $product = Product::factory()->createOne();
     $product2 = Product::factory()->createOne();
     $user = User::factory()->createOne();
-
     
     $cart = Livewire::actingAs($user)->test(Icon::class);
 
@@ -21,7 +19,7 @@ it('update quantity cart', function () {
     ]);
 
     $cart->dispatch('add-product-to-cart');
-    $this->assertEquals($cart->productsAmount, Cart::user($user->id)->count());
+    expect($cart->productsAmount)->toEqual(Cart::user($user->id)->count());
 
 
     Cart::factory()->createOne([
@@ -30,7 +28,7 @@ it('update quantity cart', function () {
     ]);
 
     $cart->dispatch('add-product-to-cart');
-    $this->assertEquals($cart->productsAmount, Cart::user($user->id)->count());
+    expect($cart->productsAmount)->toEqual(Cart::user($user->id)->count());
 });
 
 it('products in the cart of the logged in user only', function () {
@@ -38,13 +36,11 @@ it('products in the cart of the logged in user only', function () {
     $user2 = User::factory()->has(Cart::factory())->createOne();
     
     $cart = Livewire::actingAs($user1)->test(Icon::class);
-
     $cart->dispatch('add-product-to-cart');
-    $this->assertEquals($cart->productsAmount, Cart::user($user1->id)->count());
+    expect($cart->productsAmount)->toEqual(Cart::user($user1->id)->count());
 
 
     $cart = Livewire::actingAs($user2)->test(Icon::class);
-
     $cart->dispatch('add-product-to-cart');
-    $this->assertEquals($cart->productsAmount, Cart::user($user2->id)->count());
+    expect($cart->productsAmount)->toEqual(Cart::user($user2->id)->count());
 });

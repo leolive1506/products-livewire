@@ -19,7 +19,7 @@ class IsAdmin
         $userRole = auth()->user()->load('role')->role;
         
         if (!($userRole->role === 'ADMIN')) {
-            return abort(Response::HTTP_FORBIDDEN);
+            return redirect()->route('customer.product.index');
         }
         
         return $next($request);

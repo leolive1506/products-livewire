@@ -6,15 +6,15 @@
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-4">
                     <x-input-label for="name" :value="__('Name')" />
-                    <x-text-input wire:model.live="name" id="name" class="block mt-1 w-full" type="text"
+                    <x-text-input wire:model.live="form.name" id="name" class="block mt-1 w-full" type="text"
                         name="name" required autofocus autocomplete="name" />
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('form.name')" class="mt-2" />
                 </div>
                 <div class="sm:col-span-2">
                     <x-input-label for="price" :value="__('Price')" />
-                    <x-text-input wire:model.live="price" id="price" class="block mt-1 w-full" type="number"
+                    <x-text-input wire:model.live="form.price" id="price" class="block mt-1 w-full" type="number"
                         name="price" required />
-                    <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('form.price')" class="mt-2" />
                 </div>
 
 
@@ -23,8 +23,8 @@
                         class="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">Cover photo</label>
                     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                         <div class="text-center">
-                            @if ($image)
-                                <img src="{{ $image->temporaryUrl() }}" alt="Previus upload image"
+                            @if ($form->image)
+                                <img src="{{ $form->image->temporaryUrl() }}" alt="Previus upload image"
                                     class="mx-auto size-32 rounded" />
                             @else
                                 <svg class="mx-auto size-32 text-gray-300" viewBox="0 0 24 24" fill="currentColor"
@@ -38,14 +38,14 @@
                                 <label for="file-upload"
                                     class="relative cursor-pointer rounded-md bg-white dark:bg-transparent font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500 transition">
                                     <span>Upload a file</span>
-                                    <input wire:model.live="image" id="file-upload" name="file-upload" type="file"
+                                    <input wire:model.live="form.image" id="file-upload" name="file-upload" type="file"
                                         class="sr-only">
                                 </label>
                                 <p class="pl-1 text-gray-900 dark:text-gray-300">or drag and drop</p>
                             </div>
                             <p class="text-xs leading-5 text-gray-900 dark:text-gray-300 opacity-70">PNG, JPG, GIF up to
                                 10MB</p>
-                            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                            <x-input-error :messages="$errors->get('form.image')" class="mt-2" />
                         </div>
                     </div>
                 </div>
@@ -53,10 +53,10 @@
                 <div class="col-span-3">
                     <x-input-label for="description" :value="__('Description')" />
                     <div class="mt-2 flex flex-col h-[80%]">
-                        <textarea wire:model.live="description" id="description" rows="3"
+                        <textarea wire:model.live="form.description" id="description" rows="3"
                             class="block w-full h-full min-h-full flex-grow resize-none rounded-md border-0 py-1.5 text-gray-900 dark:bg-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                     </div>
-                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('form.description')" class="mt-2" />
                 </div>
             </div>
         </div>

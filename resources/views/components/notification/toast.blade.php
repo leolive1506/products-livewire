@@ -69,34 +69,12 @@
     </template>
 </div>
 
-<!-- Examples of how to dispatch the `notify` event with variable text and type -->
-{{-- <form x-data="{
-    content: 'Something happened!',
-    type: 'info',
-}" class="max-w-sm w-full" x-on:submit.prevent="$dispatch('notify', { content, type })">
-    <div>
-        <label for="message" class="text-sm font-bold">
-            Message
-        </label>
-
-        <input id="message" x-model="content" type="text"
-            class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2.5">
-    </div>
-
-    <div class="mt-4">
-        <label for="type" class="text-sm font-bold">
-            Type
-        </label>
-
-        <select id="type" x-model="type" type="text"
-            class="mt-1 block w-full rounded-md border border-gray-200 px-3 py-2.5">
-            <option value="info">Info</option>
-            <option value="success">Success</option>
-            <option value="error">Error</option>
-        </select>
-    </div>
-
-    <button class="mt-6 inline-flex rounded-md border border-gray-200 bg-white px-5 py-2.5">
-        Dispatch notification
-    </button>
-</form> --}}
+@if(session()->has('notify'))
+    <div x-data="{
+        init () {
+            this.$nextTick(() => {
+                this.$dispatch('notify', {{ json_encode(session('notify')) }});
+            })
+        }
+    }"></div>
+@endif

@@ -2,28 +2,17 @@
 
 namespace App\Livewire\Admin\Product;
 
+use App\Livewire\Forms\Admin\Product\CreateForm;
 use App\Models\Product;
 use Livewire\Component;
 use \Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
     use WithFileUploads;
-
-    #[Validate(['required', 'string'])]
-    public string $name = '';
-
-    #[Validate(['required', 'numeric', 'min:1'])]
-    public float|null $price = null;
-
-    #[Validate(['nullable', 'string'])]
-    public string $description = '';
-
-    #[Validate(['required', 'image', 'max:1024'])]
-    public $image;
+    public CreateForm $form;
 
     public function render(): View
     {
@@ -32,18 +21,23 @@ class Create extends Component
 
     public function store()
     {
-
         $this->validate();
         
         DB::transaction(function () {
             Product::query()->create([
-                'name' => $this->name,
-                'description' => $this->description,
-                'price' => $this->price,
-                'image' => asset($this->image->store('products', 'public'))
+                'name' => $this->form->name,
+                'description' => $this->form->description,
+                'price' => $this->form->price,
+                'image' => asset($this->form->image->store('products', 'public'))
             ]);
 
-            $this->reset('name', 'price', 'image', 'description');
+            $this->form->reset();
         });
+
+        return redirect()->route('admin.product.index')
+            ->with('notify', [
+                'content' => 'Save with success',
+                'type' => 'success'
+            ]);
     }
 }

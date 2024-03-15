@@ -22,9 +22,9 @@ it('should have stored the file', function () {
     $file = fakeFile();
 
     Livewire::test(Create::class)
-        ->set('name', 'Product 1')
-        ->set('price', 200)
-        ->set('image', $file)
+        ->set('form.name', 'Product 1')
+        ->set('form.price', 200)
+        ->set('form.image', $file)
         ->call('store')
         ->assertStatus(200);
 
@@ -37,10 +37,10 @@ it('should have stored the product in the database', function () {
     $file = fakeFile();
 
     Livewire::test(Create::class)
-        ->set('name', 'Product 1')
-        ->set('description', 'Product description')
-        ->set('price', 200)
-        ->set('image', $file)
+        ->set('form.name', 'Product 1')
+        ->set('form.description', 'Product description')
+        ->set('form.price', 200)
+        ->set('form.image', $file)
         ->call('store')
         ->assertStatus(200);
 
@@ -56,16 +56,16 @@ it('should reset the component attributes', function () {
     Storage::fake('public');
 
     $livewire = Livewire::test(Create::class)
-        ->set('name', 'Product 1')
-        ->set('price', 200)
-        ->set('image', fakeFile())
+        ->set('form.name', 'Product 1')
+        ->set('form.price', 200)
+        ->set('form.image', fakeFile())
         ->call('store')
         ->assertStatus(200);
 
-    expect($livewire->name)->toBeEmpty();
-    expect($livewire->price)->toBeEmpty();
-    expect($livewire->image)->toBeEmpty();
-    expect($livewire->description)->toBeEmpty();
+    expect($livewire->form->name)->toBeEmpty();
+    expect($livewire->form->price)->toBeEmpty();
+    expect($livewire->form->image)->toBeEmpty();
+    expect($livewire->form->description)->toBeEmpty();
 });
 
 test('validate if name is required', function () {
@@ -73,7 +73,7 @@ test('validate if name is required', function () {
 
     Livewire::test(Create::class)
         ->call('store')
-        ->assertHasErrors(['name' => ['required']]);
+        ->assertHasErrors(['form.name' => ['required']]);
 });
 
 test('validate if price is required', function () {
@@ -81,34 +81,34 @@ test('validate if price is required', function () {
 
     Livewire::test(Create::class)
         ->call('store')
-        ->assertHasErrors(['price' => ['required']]);
+        ->assertHasErrors(['form.price' => ['required']]);
 });
 
 test('validate if minimum price must be 1', function () {
     Storage::fake('public');
 
     Livewire::test(Create::class)
-        ->set('price', 0)
+        ->set('form.price', 0)
         ->call('store')
-        ->assertHasErrors(['price' => ['min']]);
+        ->assertHasErrors(['form.price' => ['min']]);
 });
 
 test('validate if image is a image and max size', function () {
     Storage::fake('public');
 
     Livewire::test(Create::class)
-        ->set('image', fakeFile(size: 1025))
+        ->set('form.image', fakeFile(size: 1025))
         ->call('store')
-        ->assertHasErrors(['image' => ['max']]);
+        ->assertHasErrors(['form.image' => ['max']]);
 });
 
 test('validate if description is nullable', function () {
     Storage::fake('public');
 
     Livewire::test(Create::class)
-        ->set('name', 'Product 1')
-        ->set('price', 200)
-        ->set('image', fakeFile())
+        ->set('form.name', 'Product 1')
+        ->set('form.price', 200)
+        ->set('form.image', fakeFile())
         ->call('store')
         ->assertHasNoErrors();
 });

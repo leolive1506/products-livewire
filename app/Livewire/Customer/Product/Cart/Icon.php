@@ -18,6 +18,6 @@ class Icon extends Component
     #[Computed()]
     public function productsAmount()
     {
-        return Cart::count();
+        return Cart::user(auth()->id())->count();
     }
 }

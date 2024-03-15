@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Product;
 
-use App\Livewire\Forms\Admin\Product\CreateForm;
+use App\Livewire\Forms\Admin\Product\Form;
 use App\Models\Product;
 use Livewire\Component;
 use \Illuminate\Contracts\View\View;
@@ -12,7 +12,7 @@ use Livewire\WithFileUploads;
 class Create extends Component
 {
     use WithFileUploads;
-    public CreateForm $form;
+    public Form $form;
 
     public function render(): View
     {
@@ -21,18 +21,7 @@ class Create extends Component
 
     public function store()
     {
-        $this->validate();
-        
-        DB::transaction(function () {
-            Product::query()->create([
-                'name' => $this->form->name,
-                'description' => $this->form->description,
-                'price' => $this->form->price,
-                'image' => asset($this->form->image->store('products', 'public'))
-            ]);
-
-            $this->form->reset();
-        });
+        $this->form->create();
 
         return redirect()->route('admin.product.index')
             ->with('notify', [

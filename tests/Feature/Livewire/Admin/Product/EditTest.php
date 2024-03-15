@@ -8,16 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use Livewire\Features\SupportTesting\Testable;
 
-function fakeFile(int $size = null): File
-{
-    $file = UploadedFile::fake()->image('image.jpg');
-    if ($size) {
-        $file->size($size);
-    }
-
-    return $file;
-}
-
 function edit($product = []): Testable
 {
     return Livewire::test(Edit::class, ['product' => Product::factory()->createOne($product)]);

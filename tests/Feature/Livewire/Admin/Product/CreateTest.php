@@ -1,20 +1,8 @@
 <?php
 
 use App\Livewire\Admin\Product\Create;
-use Illuminate\Http\Testing\File;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
-
-function fakeFile(int $size = null): File
-{
-    $file = UploadedFile::fake()->image('image.jpg');
-    if ($size) {
-        $file->size($size);
-    }
-
-    return $file;
-}
 
 it('should have stored the file', function () {
     Storage::fake('public');

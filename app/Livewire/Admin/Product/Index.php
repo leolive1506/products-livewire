@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Product;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
@@ -14,6 +15,7 @@ class Index extends Component
     }
 
     #[Computed()]
+    #[On('update-list-products')]
     public function products()
     {
         return Product::all();

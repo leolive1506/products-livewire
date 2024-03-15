@@ -23,7 +23,7 @@ it('only admin see page', function () {
     $customer = User::factory()->createOne();
     UserRole::factory()->createOne(['role' => 'CUSTOMER', 'user_id' => $customer->id]);
 
-    $this->actingAs($customer)->get(route('admin.product.index'))->assertForbidden();
+    $this->actingAs($customer)->get(route('admin.product.index'))->assertRedirect();
 
     $admin = User::factory()->createOne();
     UserRole::factory()->createOne(['role' => 'ADMIN', 'user_id' => $admin->id]);

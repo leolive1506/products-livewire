@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Http\Testing\File;
+use Illuminate\Http\UploadedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,12 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function fakeFile(int $size = null): File
 {
-    // ..
+    $file = UploadedFile::fake()->image('image.jpg');
+    if ($size) {
+        $file->size($size);
+    }
+
+    return $file;
 }

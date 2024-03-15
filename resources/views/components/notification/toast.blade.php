@@ -1,7 +1,6 @@
 <div x-data="{
     notifications: [],
     add(e) {
-        console.log(e);
         this.notifications.push({
             id: e.timeStamp,
             type: e.detail.type,
